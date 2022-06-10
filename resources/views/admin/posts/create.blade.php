@@ -25,7 +25,7 @@
         </div>
         <div class="form-group form-check">
             <label class="form-check-label" for="image">Inserisci immagine</label>
-            <input type="url" class="form-control" id="image" name="image">
+            <input type="url" class="form-control" placeholder="url dell'immagine" id="image" name="image">
         </div>
         <div class="form-group form-check">
             <label class="form-check-label" for="slug">Slug</label>

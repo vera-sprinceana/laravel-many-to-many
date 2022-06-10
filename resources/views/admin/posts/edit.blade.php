@@ -34,6 +34,21 @@
             <label class="form-check-label" for="slug">Slug</label>
             <input type="text" class="form-control" id="slug" name="slug" value="{{old('slug', $post->slug)}} ">
           </div>
+
+          <h5>Modifica tags</h5>
+        <div class="form-check form-check-inline">
+            @forelse($tags as $tag)
+            <input class="form-check-input" type="checkbox" id="tag-{{$tag->id}}" value="{{$tag->id}}" name="tags[]"
+                @if(in_array($tag->id, old('tags', $post_tags_id))) checked @endif
+            >
+
+            <label class="form-check-label mr-3" for="tag-{{$tag->id}}">{{ $tag->label }}</label>
+
+            @empty
+            <h3>Non ci sono tag</h3>
+            @endforelse
+
+        </div>
         <button type="submit" class="btn btn-success">Submit</button>
       </form>
 </div>

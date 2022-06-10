@@ -48,6 +48,8 @@ class PostController extends Controller
         $new_post->fill($data);
         $new_post->slug= Str::slug($new_post->title, '-');
         $new_post->save();
+
+        if(array_key_exists('tags',$data)) $new_post->tags()->attach($data['tags']);
         return redirect()->route('admin.posts.show', $new_post);
     }
 
@@ -72,7 +74,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+
+        $post_tags_id= $post->tags->pluck('id')->toArray();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'post_tags_id'));
     }
 
     /**
