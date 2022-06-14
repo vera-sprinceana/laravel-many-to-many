@@ -7,7 +7,7 @@
         @csrf
         <div class="form-group">
             <label for="title">Inserisci il titolo</label>
-            <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title">
+            <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title" enctype="multipart/form-data">
         </div>
         <div class="form-group">
             <label for="category">Category</label>
@@ -23,14 +23,14 @@
             <label for="content">Inserisci in contenuto</label>
             <input type="text" class="form-control" id="content" name="content">
         </div>
-        <div class="form-group form-check">
-            <label class="form-check-label" for="image">Inserisci immagine</label>
-            <input type="url" class="form-control" placeholder="url dell'immagine" id="image" name="image">
+        <div class="form-group">
+            <label for="image">Immagine del post</label>
+            <input type="file" class="form-control-file" id="image" placeholder="url dell'immagine" name="image">
         </div>
-        <div class="form-group form-check">
+        {{-- <div class="form-group form-check">
             <label class="form-check-label" for="slug">Slug</label>
             <input type="text" class="form-control" id="slug" name="slug">
-        </div>
+        </div> --}}
         <hr>
 
         <h5>Seleziona tags</h5>

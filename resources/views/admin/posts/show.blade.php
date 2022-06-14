@@ -7,7 +7,7 @@
         {{session('message')}}
     </div>
     @endif
-    <img src="{{$post->image}}" alt="post->image" class="my-4">
+    <img src="{{ asset("storage/$post->image") }}" alt="post->image" class="my-4">
     <h3>{{$post->title}}</h3>
     <p>{{$post->content}}</p>
     <h3>Tags:</h3>

@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -44,7 +45,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+
         $new_post= new Post();
+
+        if(array_key_exists('image', $data)){
+            $image_url= Storage::put('post_images', $data['image']);
+            $data['image']=$image_url; 
+        }
+       
         $new_post->fill($data);
         $new_post->slug= Str::slug($new_post->title, '-');
         $new_post->save();
@@ -90,6 +98,15 @@ class PostController extends Controller
     {
         $data=$request->all();
         $post['slug'] = Str::slug( $request->title , '-');
+
+        
+        if(array_key_exists('image', $data)){
+            if( $post->image )Storage::delete($post->image);
+
+            $image_url = Storage::put('post_images', $data['image'] );
+            $data['image'] = $image_url;
+        }
+
         $post->update($data);
         return redirect()->route('admin.posts.show', $post)->with('message', 'Hai aggiornato con successo');
     }
