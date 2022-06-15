@@ -9,7 +9,10 @@ use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
+use App\Mail\CreateMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 class PostController extends Controller
 {
     /**
@@ -45,7 +48,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
-
+        $user= Auth::user();
         $new_post= new Post();
 
         if(array_key_exists('image', $data)){
@@ -58,6 +61,11 @@ class PostController extends Controller
         $new_post->save();
 
         if(array_key_exists('tags',$data)) $new_post->tags()->attach($data['tags']);
+
+        //email
+
+        $mail= new CreateMail($new_post);
+        Mail::to($user->email)->send($mail);
         return redirect()->route('admin.posts.show', $new_post);
     }
 
@@ -101,7 +109,7 @@ class PostController extends Controller
 
         
         if(array_key_exists('image', $data)){
-            if( $post->image )Storage::delete($post->image);
+            if($post->image)Storage::delete($post->image);
 
             $image_url = Storage::put('post_images', $data['image'] );
             $data['image'] = $image_url;
