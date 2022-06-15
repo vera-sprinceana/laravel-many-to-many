@@ -9,10 +9,12 @@ use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+
+
 use Illuminate\Support\Facades\Auth;
-use App\Mail\CreateMail;
 use Illuminate\Support\Facades\Mail;
-use App\Models\User;
+use App\Mail\CreateMail;
+
 class PostController extends Controller
 {
     /**
@@ -49,6 +51,7 @@ class PostController extends Controller
     {
         $data=$request->all();
         $user= Auth::user();
+        
         $new_post= new Post();
 
         if(array_key_exists('image', $data)){
@@ -109,7 +112,7 @@ class PostController extends Controller
 
         
         if(array_key_exists('image', $data)){
-            if($post->image)Storage::delete($post->image);
+            if($post->image) Storage::delete($post->image);
 
             $image_url = Storage::put('post_images', $data['image'] );
             $data['image'] = $image_url;
